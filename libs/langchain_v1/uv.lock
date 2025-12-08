@@ -1,5 +1,5 @@
 version = 1
-revision = 2
+revision = 3
 requires-python = ">=3.10.0, <4.0.0"
 resolution-markers = [
     "python_full_version >= '3.14' and platform_python_implementation == 'PyPy'",
@@ -1931,6 +1931,7 @@ dependencies = [
     { name = "langchain-core" },
     { name = "langgraph" },
     { name = "pydantic" },
+    { name = "pytest" },
 ]
 
 [package.optional-dependencies]
@@ -2035,6 +2036,7 @@ requires-dist = [
     { name = "langchain-xai", marker = "extra == 'xai'" },
     { name = "langgraph", specifier = ">=1.0.2,<1.1.0" },
     { name = "pydantic", specifier = ">=2.7.4,<3.0.0" },
+    { name = "pytest", specifier = ">=8.4.2" },
 ]
 provides-extras = ["community", "anthropic", "openai", "azure-ai", "google-vertexai", "google-genai", "fireworks", "ollama", "together", "mistralai", "huggingface", "groq", "aws", "deepseek", "xai", "perplexity"]
 
@@ -2166,7 +2168,7 @@ wheels = [
 
 [[package]]
 name = "langchain-core"
-version = "1.1.0"
+version = "1.1.1"
 source = { editable = "../core" }
 dependencies = [
     { name = "jsonpatch" },
