@@ -1,0 +1,46 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python: PromptTemplate - 基础调试",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "langchain_classic.01-dig.02_dig_prompt_template",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/libs/core:${workspaceFolder}/libs/langchain:${workspaceFolder}/libs/partners/openai"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Python: PromptTemplate - 测试用例",
+            "type": "debugpy",
+            "request": "launch",
+            "module": "pytest",
+            "args": [
+                "libs/langchain/langchain_classic/01-dig/test_prompt_template.py",
+                "-v",
+                "-s"
+            ],
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/libs/core:${workspaceFolder}/libs/langchain:${workspaceFolder}/libs/partners/openai"
+            },
+            "justMyCode": false
+        },
+        {
+            "name": "Python: 当前文件",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/libs/core:${workspaceFolder}/libs/langchain:${workspaceFolder}/libs/partners/openai"
+            },
+            "justMyCode": false
+        }
+    ]
+}
