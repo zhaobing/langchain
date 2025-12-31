@@ -9,9 +9,19 @@ from typing import Any
 from langchain_core.prompts import PromptTemplate
 from langchain_core.tools import BaseTool
 from typing_extensions import override
+from langchain_openai import ChatOpenAI
 
 from langchain_classic.agents import AgentExecutor, create_react_agent
-from langchain_openai import ChatOpenAI
+
+
+import os
+import dotenv
+dotenv.load_dotenv()
+
+
+os.environ["OPENAI_API_KEY"] = os.getenv("API_KEY")
+os.environ["OPENAI_BASE_URL"] = os.getenv("BASE_URL")
+MODEL_NAME = "Pro/deepseek-ai/DeepSeek-V3"
 
 
 class SimpleAddTool(BaseTool):
@@ -63,7 +73,10 @@ Thought:{agent_scratchpad}"""
 
     # 3. 创建 agent
     # 注意：需要设置环境变量 OPENAI_API_KEY
-    llm = ChatOpenAI(model="gpt-3.5-turbo", temperature=0)
+
+    llm = ChatOpenAI(
+        model=MODEL_NAME,
+    )
 
     agent = create_react_agent(llm, tools, prompt)
 
@@ -83,6 +96,7 @@ Thought:{agent_scratchpad}"""
 if __name__ == "__main__":
     # 设置环境变量（如果需要）
     import os
+
     if not os.getenv("OPENAI_API_KEY"):
         print("请设置环境变量 OPENAI_API_KEY")
         print("例如: export OPENAI_API_KEY='your-api-key-here'")
