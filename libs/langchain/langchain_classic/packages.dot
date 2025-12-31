@@ -1,0 +1,40 @@
+digraph "packages" {
+rankdir=BT
+charset="utf-8"
+"langchain_classic.chat_models" [color="black", label=<langchain_classic.chat_models>, shape="box", style="solid"];
+"langchain_classic.chat_models.anthropic" [color="black", label=<langchain_classic.chat_models.anthropic>, shape="box", style="solid"];
+"langchain_classic.chat_models.anyscale" [color="black", label=<langchain_classic.chat_models.anyscale>, shape="box", style="solid"];
+"langchain_classic.chat_models.azure_openai" [color="black", label=<langchain_classic.chat_models.azure_openai>, shape="box", style="solid"];
+"langchain_classic.chat_models.azureml_endpoint" [color="black", label=<langchain_classic.chat_models.azureml_endpoint>, shape="box", style="solid"];
+"langchain_classic.chat_models.baichuan" [color="black", label=<langchain_classic.chat_models.baichuan>, shape="box", style="solid"];
+"langchain_classic.chat_models.baidu_qianfan_endpoint" [color="black", label=<langchain_classic.chat_models.baidu_qianfan_endpoint>, shape="box", style="solid"];
+"langchain_classic.chat_models.base" [color="black", label=<langchain_classic.chat_models.base>, shape="box", style="solid"];
+"langchain_classic.chat_models.bedrock" [color="black", label=<langchain_classic.chat_models.bedrock>, shape="box", style="solid"];
+"langchain_classic.chat_models.cohere" [color="black", label=<langchain_classic.chat_models.cohere>, shape="box", style="solid"];
+"langchain_classic.chat_models.databricks" [color="black", label=<langchain_classic.chat_models.databricks>, shape="box", style="solid"];
+"langchain_classic.chat_models.ernie" [color="black", label=<langchain_classic.chat_models.ernie>, shape="box", style="solid"];
+"langchain_classic.chat_models.everlyai" [color="black", label=<langchain_classic.chat_models.everlyai>, shape="box", style="solid"];
+"langchain_classic.chat_models.fake" [color="black", label=<langchain_classic.chat_models.fake>, shape="box", style="solid"];
+"langchain_classic.chat_models.fireworks" [color="black", label=<langchain_classic.chat_models.fireworks>, shape="box", style="solid"];
+"langchain_classic.chat_models.gigachat" [color="black", label=<langchain_classic.chat_models.gigachat>, shape="box", style="solid"];
+"langchain_classic.chat_models.google_palm" [color="black", label=<langchain_classic.chat_models.google_palm>, shape="box", style="solid"];
+"langchain_classic.chat_models.human" [color="black", label=<langchain_classic.chat_models.human>, shape="box", style="solid"];
+"langchain_classic.chat_models.hunyuan" [color="black", label=<langchain_classic.chat_models.hunyuan>, shape="box", style="solid"];
+"langchain_classic.chat_models.javelin_ai_gateway" [color="black", label=<langchain_classic.chat_models.javelin_ai_gateway>, shape="box", style="solid"];
+"langchain_classic.chat_models.jinachat" [color="black", label=<langchain_classic.chat_models.jinachat>, shape="box", style="solid"];
+"langchain_classic.chat_models.konko" [color="black", label=<langchain_classic.chat_models.konko>, shape="box", style="solid"];
+"langchain_classic.chat_models.litellm" [color="black", label=<langchain_classic.chat_models.litellm>, shape="box", style="solid"];
+"langchain_classic.chat_models.meta" [color="black", label=<langchain_classic.chat_models.meta>, shape="box", style="solid"];
+"langchain_classic.chat_models.minimax" [color="black", label=<langchain_classic.chat_models.minimax>, shape="box", style="solid"];
+"langchain_classic.chat_models.mlflow" [color="black", label=<langchain_classic.chat_models.mlflow>, shape="box", style="solid"];
+"langchain_classic.chat_models.mlflow_ai_gateway" [color="black", label=<langchain_classic.chat_models.mlflow_ai_gateway>, shape="box", style="solid"];
+"langchain_classic.chat_models.ollama" [color="black", label=<langchain_classic.chat_models.ollama>, shape="box", style="solid"];
+"langchain_classic.chat_models.openai" [color="black", label=<langchain_classic.chat_models.openai>, shape="box", style="solid"];
+"langchain_classic.chat_models.pai_eas_endpoint" [color="black", label=<langchain_classic.chat_models.pai_eas_endpoint>, shape="box", style="solid"];
+"langchain_classic.chat_models.promptlayer_openai" [color="black", label=<langchain_classic.chat_models.promptlayer_openai>, shape="box", style="solid"];
+"langchain_classic.chat_models.tongyi" [color="black", label=<langchain_classic.chat_models.tongyi>, shape="box", style="solid"];
+"langchain_classic.chat_models.vertexai" [color="black", label=<langchain_classic.chat_models.vertexai>, shape="box", style="solid"];
+"langchain_classic.chat_models.volcengine_maas" [color="black", label=<langchain_classic.chat_models.volcengine_maas>, shape="box", style="solid"];
+"langchain_classic.chat_models.yandex" [color="black", label=<langchain_classic.chat_models.yandex>, shape="box", style="solid"];
+"langchain_classic.chat_models" -> "langchain_classic.chat_models.base" [arrowhead="open", arrowtail="none"];
+}

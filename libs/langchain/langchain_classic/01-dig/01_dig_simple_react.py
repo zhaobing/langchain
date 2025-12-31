@@ -13,11 +13,10 @@ from langchain_openai import ChatOpenAI
 
 from langchain_classic.agents import AgentExecutor, create_react_agent
 
-
 import os
 import dotenv
-dotenv.load_dotenv()
 
+dotenv.load_dotenv()
 
 os.environ["OPENAI_API_KEY"] = os.getenv("API_KEY")
 os.environ["OPENAI_BASE_URL"] = os.getenv("BASE_URL")
