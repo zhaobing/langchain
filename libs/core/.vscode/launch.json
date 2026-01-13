@@ -1,0 +1,104 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Debug test_dig.py",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "test_dig",
+      "cwd": "${workspaceFolder}/tests/dig_tests",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Debug project code (with langchain_core)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "test_dig",
+      "cwd": "${workspaceFolder}/tests/dig_tests",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true"
+      },
+      "justMyCode": false,
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/langchain_core",
+          "remoteRoot": "${workspaceFolder}/.venv/lib/python3.13/site-packages/langchain_core"
+        }
+      ]
+    },
+    {
+      "name": "Python: Run test_dig.py (No Debug)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "test_dig",
+      "cwd": "${workspaceFolder}/tests/dig_tests",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "false"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Debug with pytest",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "args": [
+        "tests/dig_tests/test_dig.py",
+        "-v",
+        "-s",
+        "--tb=long"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true"
+      },
+      "justMyCode": false
+    },
+    {
+      "name": "Python: Run with uv (Debug)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uv",
+      "args": [
+        "run",
+        "python",
+        "tests/dig_tests/test_dig.py"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true"
+      },
+      "justMyCode": false
+    },
+    {
+      "name": "Python: Run with uv pytest (Debug)",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uv",
+      "args": [
+        "run",
+        "--group",
+        "test",
+        "pytest",
+        "tests/dig_tests/test_dig.py",
+        "-v",
+        "-s",
+        "--tb=long"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "env": {
+        "DEBUG": "true"
+      },
+      "justMyCode": false
+    }
+  ]
+}
