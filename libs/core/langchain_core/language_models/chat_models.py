@@ -481,6 +481,7 @@ class BaseChatModel(BaseLanguageModel[AIMessage], ABC):
         stop: list[str] | None = None,
         **kwargs: Any,
     ) -> Iterator[AIMessageChunk]:
+        # 判断是否应该使用流式 API，如果没有应用，直接调用 invoke 方法
         if not self._should_stream(async_api=False, **{**kwargs, "stream": True}):
             # Model doesn't implement streaming, so use default implementation
             yield cast(
@@ -488,8 +489,16 @@ class BaseChatModel(BaseLanguageModel[AIMessage], ABC):
                 self.invoke(input, config=config, stop=stop, **kwargs),
             )
         else:
+            # 应用了流式 API
+            # 确保 config 是一个有效的 RunnableConfig
             config = ensure_config(config)
+
+            # 将多种输入类型转换为统一的 PromptValue
             messages = self._convert_input(input).to_messages()
+
+            #处理 with_structured_output() 的参数
+            # 将 schema 转换为 JSON Schema 格式
+            # 用于后续的 tool calling 或结构化输出
             ls_structured_output_format = kwargs.pop(
                 "ls_structured_output_format", None
             ) or kwargs.pop("structured_output_format", None)
@@ -497,12 +506,19 @@ class BaseChatModel(BaseLanguageModel[AIMessage], ABC):
                 ls_structured_output_format
             )
 
+
+            # 参数准备
+            # 收集模型参数（model, temperature, max_tokens 等）
             params = self._get_invocation_params(stop=stop, **kwargs)
             options = {"stop": stop, **kwargs, **ls_structured_output_format_dict}
+            # 准备 LangSmith 追踪参数:Provider 名称Model 名称/Temperature, max_tokens 等
             inheritable_metadata = {
                 **(config.get("metadata") or {}),
                 **self._get_ls_params(stop=stop, **kwargs),
             }
+
+            # 配置回调系统，用于追踪和日志
+            # 支持多层回调：config 级别、模型级别
             callback_manager = CallbackManager.configure(
                 config.get("callbacks"),
                 self.callbacks,
@@ -512,6 +528,8 @@ class BaseChatModel(BaseLanguageModel[AIMessage], ABC):
                 inheritable_metadata,
                 self.metadata,
             )
+
+            # 启动追踪
             (run_manager,) = callback_manager.on_chat_model_start(
                 self._serialized,
                 [_format_for_tracing(messages)],
@@ -524,10 +542,12 @@ class BaseChatModel(BaseLanguageModel[AIMessage], ABC):
 
             chunks: list[ChatGenerationChunk] = []
 
+            #速率限制
             if self.rate_limiter:
                 self.rate_limiter.acquire(blocking=True)
 
             try:
+                # 统一发送消息
                 input_messages = _normalize_messages(messages)
                 run_id = "-".join((LC_ID_PREFIX, str(run_manager.run_id)))
                 yielded = False
