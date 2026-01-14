@@ -303,6 +303,7 @@ def create_schema_from_function(
     Returns:
         A Pydantic model with the same arguments as the function.
     """
+    # 获取函数签名
     sig = inspect.signature(func)
 
     if _function_annotations_are_pydantic_v1(sig, func):
@@ -314,6 +315,7 @@ def create_schema_from_function(
             # This code should be re-written to simply construct a Pydantic model
             # using inspect.signature and create_model.
             warnings.simplefilter("ignore", category=PydanticDeprecationWarning)
+            # 自动从函数签名创建一个 Pydantic 模型
             validated = validate_arguments(func, config=_SchemaConfig)  # type: ignore[operator]
 
     # Let's ignore `self` and `cls` arguments for class and instance methods
@@ -330,7 +332,7 @@ def create_schema_from_function(
             has_kwargs = True
 
     inferred_model = validated.model
-
+    # 需要过滤的参数
     if filter_args:
         filter_args_ = filter_args
     else:
@@ -347,6 +349,7 @@ def create_schema_from_function(
             ):
                 filter_args_.append(existing_param)
 
+    # 推断参数描述
     description, arg_descriptions = _infer_arg_descriptions(
         func,
         parse_docstring=parse_docstring,
