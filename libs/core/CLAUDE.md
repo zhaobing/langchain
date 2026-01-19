@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Monorepo context
+
+This is the `langchain-core` package within the larger LangChain monorepo. It defines the base abstractions that other packages build upon:
+- **`langchain`**: Concrete implementations and high-level utilities
+- **`partners/`**: Third-party integrations (OpenAI, Anthropic, etc.)
+- **`langchain-text-splitters`**: Document chunking utilities
+- **`langchain-tests`**: Standard test suite
+
+These are linked via local paths in `[tool.uv.sources]` for development.
+
 ## Package overview
 
 `langchain-core` contains the foundational abstractions and interfaces for the LangChain ecosystem. This is the **base layer** - no third-party integrations or concrete implementations of models/providers. The package defines interfaces, protocols, and base classes that the rest of the LangChain ecosystem builds upon.
@@ -224,14 +234,49 @@ message = HumanMessage(content=[
 ])
 ```
 
-### Important constraints
+### Code quality standards
 
-1. **No third-party integrations**: This package defines interfaces only. Concrete implementations (OpenAI, Anthropic, etc.) go in partner packages.
-2. **Minimal dependencies**: Keep dependencies lightweight. Avoid adding heavy libraries.
-3. **Stable public APIs**: Preserve function signatures. Use keyword-only arguments for new params.
-4. **Type hints required**: All code must have complete type hints.
-5. **Google-style docstrings**: Use Google-style docstrings with Args sections.
-6. **No network in unit tests**: Unit tests must work offline (enforced).
+**CRITICAL: Maintain stable public interfaces**
+
+Before making ANY changes to public APIs:
+- Check if the function/class is exported in `__init__.py`
+- Look for existing usage patterns in tests and examples
+- Use keyword-only arguments for new parameters: `*, new_param: str = "default"`
+- Mark experimental features with `@beta()` decorator
+
+Ask: "Would this change break someone's code if they used it last week?"
+
+**Type hints and docstrings:**
+
+All Python code MUST include type hints and return types. Use Google-style docstrings:
+
+```python
+def filter_unknown_users(users: list[str], known_users: set[str]) -> list[str]:
+    """Single line description of the function.
+
+    Any additional context about the function can go here.
+
+    Args:
+        users: List of user identifiers to filter.
+        known_users: Set of known/valid user identifiers.
+
+    Returns:
+        List of users that are not in the known_users set.
+
+    Raises:
+        ValueError: If users list is empty.
+    """
+```
+
+- Types go in function signatures, NOT in docstrings
+- If a default is present, DO NOT repeat it in the docstring unless there is post-processing
+- Focus on "why" rather than "what" in descriptions
+- Use American English spelling (e.g., "behavior", not "behaviour")
+
+**Security considerations:**
+- No `eval()`, `exec()`, or `pickle` on user-controlled input
+- Proper exception handling (no bare `except:`)
+- Remove unreachable/commented code before committing
 
 ### Related packages
 

@@ -12,12 +12,17 @@ from langchain_core.tools import tool
 # BASE_URL = "https://api.siliconflow.cn/v1/"  # DeepSeek 官方 API 端点
 # MODEL_NAME = "Pro/deepseek-ai/DeepSeek-V3"
 
+# 配置 GLM 的 API 信息
 API_KEY = "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"
 BASE_URL = "https://integrate.api.nvidia.com/v1"
 MODEL_NAME = "z-ai/glm4.7"
 
 
-@tool
+def add(a: int = 0, b: int = 0) -> int:
+    return a + b
+
+
+@tool(name_or_callable="万能计算器", parse_docstring=True)
 def calculator(expression: str) -> str:
     """A simple calculator that evaluates basic mathematical expressions.
 
@@ -50,36 +55,41 @@ def test_tool_calling_with_calculator() -> None:
         model=MODEL_NAME,
         temperature=0,
     )
-
+    print("oh-my-lady-gaga")
     print(f"there is tools:{calculator.name}")
     # 4. 打印 `tool_name.name`，`tool_name.description` 和 `tool_name.args`。
     print(f"tool' is tools:{calculator.name}")
     print(f"tool_description :{calculator.description}")
     print(f"tool_args :{calculator.args}")
+    print(f"tool_args :{calculator.response_format}")
+    print("oh-my-lady-gaga")
 
-
+    # add函数是没有加@tools注解的，所以也没有name,description,args等字段值
+    # print(f"add' is tools:{add.name}")
+    # print(f"add_description :{add.description}")
+    # print(f"add_args :{add.args}")
 
     # Bind the calculator tool to the model
-    llm_with_tools = llm.bind_tools([calculator])
+    # llm_with_tools = llm.bind_tools([calculator])
 
-    # Create a prompt that asks for a calculation
-    prompt = "What is 25 multiplied by 4 plus 17?"
+    # # Create a prompt that asks for a calculation
+    # prompt = "What is 25 multiplied by 4 plus 17?"
 
-    # Invoke the model with the bound tools
-    response = llm_with_tools.invoke(prompt)
+    # # Invoke the model with the bound tools
+    # response = llm_with_tools.invoke(prompt)
 
-    # The response should contain tool calls
-    print(f"Response: {response}")
-    print(f"Tool calls: {response.tool_calls}")
+    # # The response should contain tool calls
+    # print(f"Response: {response}")
+    # print(f"Tool calls: {response.tool_calls}")
 
-    # Verify the model attempted to call the calculator
-    assert response.tool_calls is not None, "Model should make tool calls"
+    # # Verify the model attempted to call the calculator
+    # assert response.tool_calls is not None, "Model should make tool calls"
 
-    # Extract tool call arguments and execute the calculator
-    if response.tool_calls:
-        tool_call = response.tool_calls[0]
-        result = calculator.invoke(tool_call["args"])
-        print(f"Calculation result: {result}")
+    # # Extract tool call arguments and execute the calculator
+    # if response.tool_calls:
+    #     tool_call = response.tool_calls[0]
+    #     result = calculator.invoke(tool_call["args"])
+    #     print(f"Calculation result: {result}")
 
 
 if __name__ == "__main__":

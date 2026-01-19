@@ -4,44 +4,9 @@
 
 ---
 
-### 第一阶段：应用视角 (Application Layer)
-
-**目标：** 理解 Tools 在业务代码中是如何被定义和使用的，这是分析源码的入口。
-
-#### 任务 1：最简闭环 —— `@tool` 装饰器 (10 min)
-
-* **目标**：掌握最常用的工具定义方式。
-* **行动**：
-1. 创建一个 Python 脚本。
-2. 导入 `from langchain_core.tools import tool`。
-3. 编写一个简单的加法函数，添加详细的 Docstring（这对 LLM 很重要），并加上 `@tool` 装饰器。
-4. 打印 `tool_name.name`，`tool_name.description` 和 `tool_name.args`。
+--------------------------------------------------------------------------------
 
 
-* **关注点**：观察装饰器是如何自动从你的函数签名和注释中提取 JSON Schema 的。
-
-#### 任务 2：严谨定义 —— `StructuredTool` 与 Pydantic (10 min)
-
-* **目标**：理解复杂参数的输入约束。
-* **行动**：
-1. 定义一个继承自 `pydantic.BaseModel` 的类，作为输入参数的 Schema（例如 `class CalculatorInput(BaseModel): ...`）。
-2. 使用 `StructuredTool.from_function` 方法，显式传入 `args_schema`。
-3. 尝试传入错误的参数类型调用该工具，观察抛出的 `ValidationError`。
-
-
-* **关注点**：LangChain 如何利用 Pydantic 做运行时参数校验，这在源码分析时是重点。
-
-#### 任务 3：官方工具解剖 —— `DuckDuckGo` 或 `Wikipedia` (10 min)
-
-* **目标**：看标准库是如何实现的。
-* **行动**：
-1. 阅读 `langchain_community/tools` 下任意一个简单工具的源码（推荐 Wikipedia 或 DuckDuckGoSearch）。
-2. 观察它们是继承自 `BaseTool` 还是通过函数封装的。
-
-
-* **关注点**：注意 `_run` 和 `_arun` 方法的实现区别。
-
----
 
 ### 第二阶段：设计视角 (Architecture Layer)
 
@@ -130,6 +95,11 @@
 
 
 * **关注点**：这是连接 SQLAgent、PandasAgent 等复杂 Agent 的胶水层。
+
+
+
+#### 任务 11：不使用langchain时，是如何使用tools的，之间的代码中有案例，可以找一下看看
+
 
 ---
 

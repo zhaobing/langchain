@@ -10,7 +10,7 @@
       "source.organizeImports.ruff": "explicit",
       "source.fixAll": "explicit"
     },
-    "editor.defaultFormatter": "charliermarsh.ruff"
+    "editor.defaultFormatter": "ms-python.autopep8"
   },
   "python.testing.pytestArgs": [
     "tests"
